@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginEnd="10sp"
+    android:layout_height="wrap_content">
+
+   <LinearLayout
+       android:id="@+id/layout_select_message"
+       android:layout_width="wrap_content"
+       android:orientation="vertical"
+       android:layout_height="wrap_content">
+       <ImageView
+           android:id="@+id/image_select_gallery"
+           android:layout_width="70dp"
+           android:layout_height="70dp"
+           android:visibility="gone"/>
+
+       <VideoView
+           android:id="@+id/video_select_gallery"
+           android:layout_width="70dp"
+           android:layout_height="70dp"
+           android:visibility="gone"/>
+
+       <ImageView
+           android:id="@+id/img_pdf"
+           android:layout_width="70dp"
+           android:layout_height="70dp"
+           android:src="@drawable/ic_pdf_message"
+           android:visibility="gone"/>
+
+       <TextView
+           android:id="@+id/select_file_name"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textSize="11sp"
+           android:layout_gravity="center"
+           android:maxWidth="100dp"
+           android:layout_marginTop="5sp"
+           android:textColor="@color/black"/>
+   </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/remove_message_select"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:src="@drawable/ic_cancel"
+        android:layout_alignEnd="@+id/layout_select_message"/>
+
+</RelativeLayout>

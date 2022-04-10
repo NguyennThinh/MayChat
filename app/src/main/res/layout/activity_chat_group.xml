@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Views.ChatGroupActivity">
+
+    <androidx.appcompat.widget.Toolbar
+
+        android:id="@+id/toolbar_single_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_sky">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_centerVertical="true"
+
+                android:src="@drawable/ic_back_activity" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_group_receiver"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toEndOf="@+id/img_back" />
+
+            <LinearLayout
+                android:layout_toEndOf="@+id/img_group_receiver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_name_group_receiver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_sum_participant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_menu_group"
+                android:layout_width="30sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10sp"
+                android:src="@drawable/ic_menu" />
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/layout_display_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#BBEDE3"
+        android:layout_above="@+id/layout_message_select"
+        android:layout_below="@+id/toolbar_single_chat"
+        android:padding="10sp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/layout_message_select"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        android:layout_above="@id/layout_send_message"/>
+    <LinearLayout
+        android:id="@+id/layout_send_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingStart="5sp">
+
+        <ImageView
+            android:id="@+id/select_message_type"
+            android:layout_width="35sp"
+            android:layout_height="35sp"
+            android:layout_marginEnd="5sp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_select_mesage" />
+
+        <EditText
+            android:id="@+id/input_message"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="Nhập tin nhắn"
+            android:paddingStart="10sp"
+            android:paddingEnd="10sp" />
+
+        <ImageView
+            android:id="@+id/select_camera"
+            android:layout_width="35sp"
+            android:layout_height="35sp"
+            android:layout_marginEnd="10sp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_camera" />
+
+        <ImageView
+            android:id="@+id/send_message"
+            android:layout_width="35sp"
+            android:layout_height="35sp"
+
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="5sp"
+            android:src="@drawable/ic_send_message" />
+    </LinearLayout>
+</RelativeLayout>

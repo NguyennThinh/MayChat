@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1031363159334",
+    "project_id": "may-app-f3200",
+    "storage_bucket": "may-app-f3200.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031363159334:android:a1c55c92aa674514b74de7",
+        "android_client_info": {
+          "package_name": "com.example.maychatapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031363159334-pkhp4csisbpm6i05j6oqclc61api5l19.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.maychatapplication",
+            "certificate_hash": "6f169ba46c6a61c159e02d0e4a5395b3f1c92d41"
+          }
+        },
+        {
+          "client_id": "1031363159334-smj2ddveg93g597fhb01rdlhm4ne7922.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUQ722sKE9TvN_3XThOzxLBiiP8MvESVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031363159334-smj2ddveg93g597fhb01rdlhm4ne7922.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

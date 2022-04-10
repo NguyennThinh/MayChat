@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_user_sender"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="10sp"
+        android:src="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/name_sender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15sp"
+        android:layout_marginTop="5sp"
+        android:layout_toEndOf="@+id/img_user_sender"
+        android:textColor="@color/blue_sky"
+        android:textSize="10sp"
+        tools:ignore="SmallSp" />
+
+    <LinearLayout
+        android:id="@+id/layout_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_sender"
+        android:layout_marginStart="10sp"
+        android:layout_toEndOf="@+id/img_user_sender">
+
+        <TextView
+            android:id="@+id/message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_message_receiver"
+            android:backgroundTint="#2196F3"
+            android:gravity="center"
+            android:minWidth="80sp"
+            android:paddingStart="15sp"
+            android:paddingTop="5sp"
+            android:paddingEnd="10sp"
+            android:paddingBottom="5sp"
+            android:text="hihi"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+
+        <ImageView
+            android:id="@+id/message_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_message_receiver"
+            android:backgroundTint="#2196F3"
+            android:maxWidth="150dp"
+            android:maxHeight="100dp"
+            android:paddingStart="15sp"
+            android:paddingTop="5sp"
+            android:paddingEnd="5sp"
+            android:paddingBottom="5sp"
+            android:visibility="gone" />
+
+        <VideoView
+            android:id="@+id/message_video"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:backgroundTint="#2196F3"
+            android:paddingStart="15sp"
+            android:paddingTop="5sp"
+            android:paddingEnd="5sp"
+            android:paddingBottom="5sp"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/layout_message_pdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_layout_message"
+            android:backgroundTint="@color/blue_sky"
+            android:paddingStart="5sp"
+            android:paddingTop="5sp"
+            android:paddingEnd="10sp"
+            android:paddingBottom="5sp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/image_file_message"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:src="@drawable/ic_pdf_message" />
+
+            <TextView
+                android:id="@+id/message_file_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5sp"
+                android:layout_toEndOf="@+id/image_file_message"
+                android:maxWidth="200dp"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/message_file_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/message_file_name"
+                android:layout_marginStart="5sp"
+                android:layout_toEndOf="@+id/image_file_message"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/time_send_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10sp"
+            android:textColor="@color/black"
+            android:textSize="8sp"
+            tools:ignore="SmallSp" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/message_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_message"
+        android:layout_marginStart="10sp"
+        android:layout_toEndOf="@+id/img_user_sender"
+        android:text="Deliver"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        tools:ignore="SmallSp" />
+
+    <LinearLayout
+        android:id="@+id/background_image_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#4B000000"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_gravity="top"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="10sp"
+            android:src="@drawable/ic_back_activity" />
+
+        <ImageView
+            android:id="@+id/image_message_zoom_in"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</RelativeLayout>

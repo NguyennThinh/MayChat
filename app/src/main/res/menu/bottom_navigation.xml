@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/ListChat"
+        android:icon="@drawable/ic_list_message"
+
+        android:title="@string/chat"/>
+    <item android:id="@+id/employee"
+        android:icon="@drawable/ic_list_user"
+
+        android:title="@string/employee"/>
+    <item android:id="@+id/Group"
+        android:icon="@drawable/ic_list_group"
+
+        android:title="@string/group"/>
+
+    <item android:id="@+id/work"
+        android:icon="@drawable/ic_work"
+
+        android:title="@string/work"/>
+</menu>

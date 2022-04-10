@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MayChat</string>
+    <string name="login">Đăng nhập</string>
+    <string name="enter_email">Nhập email</string>
+    <string name="enter_pass">Nhập mật khẩu</string>
+    <string name="Register">Đăng ký</string>
+    <string name="chat">Tin nhắn</string>
+    <string name="employee">Nhân viên</string>
+    <string name="group">Nhóm</string>
+    <string name="person">Cá nhân</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="work">Công việc</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="create_group">Tạo nhóm</string>
+</resources>
