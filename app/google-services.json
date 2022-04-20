@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1031363159334",
+    "firebase_url": "https://may-app-f3200-default-rtdb.firebaseio.com",
     "project_id": "may-app-f3200",
     "storage_bucket": "may-app-f3200.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1031363159334-0f981h6mik29keskpacjvb1btgdef850.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.maychatapplication",
+            "certificate_hash": "0b6ea883d742a6fe9c8d8a230410595b3b4b006f"
+          }
+        },
         {
           "client_id": "1031363159334-pkhp4csisbpm6i05j6oqclc61api5l19.apps.googleusercontent.com",
           "client_type": 1,
