@@ -25,6 +25,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +54,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
@@ -73,6 +76,9 @@ public class ChatGroupActivity extends AppCompatActivity implements PopupMenu.On
     private RecyclerView layoutDisplayMessage, layoutDisplayMessageSelect;
     private CircleImageView imgGroup;
     private TextView groupName, sumParticipant;
+    private RelativeLayout layoutProgress;
+    private ProgressBar loading;
+    private TextView loadingView;
 
     //adapter
     LayoutMessageGroupAdapter adapter;
@@ -178,6 +184,9 @@ public class ChatGroupActivity extends AppCompatActivity implements PopupMenu.On
         imgMenu = findViewById(R.id.img_menu_group);
         groupName = findViewById(R.id.tv_name_group_receiver);
         sumParticipant = findViewById(R.id.tv_sum_participant);
+        layoutProgress = findViewById(R.id.layout_progress);
+        loading = findViewById(R.id.loading);
+        loadingView = findViewById(R.id.loading_view);
 
         layoutDisplayMessage = findViewById(R.id.layout_display_message);
         layoutDisplayMessageSelect = findViewById(R.id.layout_message_select);
@@ -212,7 +221,9 @@ public class ChatGroupActivity extends AppCompatActivity implements PopupMenu.On
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         List<Participant> arrUserGroups = new ArrayList<>();
                         for (DataSnapshot dn : snapshot.getChildren()) {
-                            arrUserGroups.add(new Participant(dn.child("id").getValue() + "", dn.child("role").getValue() + "", dn.child("partDate").getValue() + ""));
+                            Participant participant = dn.getValue(Participant.class);
+                         //  arrUserGroups.add(new Participant(dn.child("id").getValue() + "", dn.child("role").getValue(), dn.child("partDate").getValue() + ""));
+                            arrUserGroups.add(participant);
                             arrUserID.add(dn.child("id").getValue().toString());
 
                         }
@@ -282,16 +293,22 @@ public class ChatGroupActivity extends AppCompatActivity implements PopupMenu.On
         databaseReference.child(groupReceiver.getGroupID()).child("Message").child(timeSend).setValue(message);
 
 
+        HashMap<String, Object> chatlist = new HashMap<>();
+        chatlist.put("id", groupReceiver.getGroupID());
+        chatlist.put("type", "group");
+        chatlist.put("timeSend", System.currentTimeMillis());
+
         DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("ChatList")
                 .child(mUser.getUid()).child(groupReceiver.getGroupID());
+        databaseReference1.updateChildren(chatlist);
         databaseReference1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()){
 
-                    databaseReference1.child("id").setValue(groupReceiver.getGroupID());
-                    databaseReference1.child("type").setValue("group");
+                    databaseReference1.updateChildren(chatlist);
                 }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -307,15 +324,22 @@ public class ChatGroupActivity extends AppCompatActivity implements PopupMenu.On
 
                         for (DataSnapshot dn : snapshot.getChildren()){
 
+                            HashMap<String, Object> chatlist1 = new HashMap<>();
+                            chatlist1.put("id", groupReceiver.getGroupID());
+                            chatlist1.put("type", "group");
+                            chatlist1.put("timeSend", System.currentTimeMillis());
+
                             DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("ChatList")
                                     .child(dn.child("id").getValue()+"").child(groupReceiver.getGroupID());
+                            databaseReference2.updateChildren(chatlist1);
                             databaseReference2.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (!snapshot.exists()){
-                                        databaseReference2.child("id").setValue(groupReceiver.getGroupID());
-                                        databaseReference2.child("type").setValue("group");
+                                        databaseReference2.updateChildren(chatlist1);
+
                                     }
+
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
@@ -336,6 +360,8 @@ public class ChatGroupActivity extends AppCompatActivity implements PopupMenu.On
     private void sendImageMessage() {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         String idVideo = UUID.randomUUID().toString();
+        layoutProgress.setVisibility(View.VISIBLE);
+
         for (int i = 0; i < arrImageUri.size(); i++) {
             Uri uri = arrImageUri.get(i);
             StorageReference fileSaveURL =storageReference.child("image/"+uri.getLastPathSegment()+"_"+idVideo);
@@ -353,6 +379,15 @@ public class ChatGroupActivity extends AppCompatActivity implements PopupMenu.On
                     sendMessage(message);
                     arrImageUri.clear();
                     layoutDisplayMessageSelect.setVisibility(View.GONE);
+                    layoutProgress.setVisibility(View.GONE);
+                    layoutDisplayMessage.scrollToPosition(arrMessage.size() - 1);
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    double progress= 100 * snapshot.getBytesTransferred()/snapshot.getTotalByteCount();
+                    loading.setProgress((int) progress);
+                    loadingView.setText("Đang gửi: "+progress +"%");
                 }
             });
         }
@@ -360,6 +395,8 @@ public class ChatGroupActivity extends AppCompatActivity implements PopupMenu.On
     private void sendVideoMessage() {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         String idVideo = UUID.randomUUID().toString();
+        layoutProgress.setVisibility(View.VISIBLE);
+
         for (int i = 0; i < arrVideoUri.size(); i++) {
             Uri uri = arrVideoUri.get(i);
             StorageReference fileSaveURL =storageReference.child("video/"+uri.getLastPathSegment()+"_"+idVideo);
@@ -375,6 +412,15 @@ public class ChatGroupActivity extends AppCompatActivity implements PopupMenu.On
                     sendMessage(message);
                     arrVideoUri.clear();
                     layoutDisplayMessageSelect.setVisibility(View.GONE);
+                    layoutProgress.setVisibility(View.GONE);
+                    layoutDisplayMessage.scrollToPosition(arrMessage.size() - 1);
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    double progress= 100 * snapshot.getBytesTransferred()/snapshot.getTotalByteCount();
+                    loading.setProgress((int) progress);
+                    loadingView.setText("Đang gửi: "+progress +"%");
                 }
             });
         }
@@ -382,6 +428,8 @@ public class ChatGroupActivity extends AppCompatActivity implements PopupMenu.On
     private void sendFileMessage() {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         String idFile = UUID.randomUUID().toString();
+        layoutProgress.setVisibility(View.VISIBLE);
+
         for (int i = 0; i < arrFileUri.size(); i++) {
             Uri uri = arrFileUri.get(i);
             StorageReference fileSaveURL =storageReference.child("file/"+uri.getLastPathSegment()+"_"+idFile);
@@ -397,6 +445,15 @@ public class ChatGroupActivity extends AppCompatActivity implements PopupMenu.On
                     sendMessage(message);
                     arrFileUri.clear();
                     layoutDisplayMessageSelect.setVisibility(View.GONE);
+                    layoutProgress.setVisibility(View.GONE);
+                    layoutDisplayMessage.scrollToPosition(arrMessage.size() - 1);
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    double progress= 100 * snapshot.getBytesTransferred()/snapshot.getTotalByteCount();
+                    loading.setProgress((int) progress);
+                    loadingView.setText("Đang gửi: "+progress +"%");
                 }
             });
         }

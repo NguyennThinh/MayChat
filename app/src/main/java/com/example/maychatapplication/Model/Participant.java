@@ -2,10 +2,10 @@ package com.example.maychatapplication.Model;
 
 public class Participant {
     private String id;
-    private String role;
+    private int role;
     private String partDate;
 
-    public Participant(String id, String role, String partDate) {
+    public Participant(String id, int role, String partDate) {
         this.id = id;
         this.role = role;
         this.partDate = partDate;
@@ -22,11 +22,11 @@ public class Participant {
         this.id = id;
     }
 
-    public String getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(int role) {
         this.role = role;
     }
 

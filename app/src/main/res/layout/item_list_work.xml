@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="10sp"
+    app:cardCornerRadius="8sp"
+    android:elevation="10dp"
+    android:layout_height="wrap_content">
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:paddingBottom="10sp">
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="dadsaadada"
+           android:textColor="@color/black"
+           android:textSize="18sp"
+           android:layout_marginStart="10sp"
+           android:id="@+id/work_name"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/work_name"
+           android:layout_marginTop="5sp"
+           android:layout_marginStart="10sp"
+           android:text="adasdada"
+           android:textColor="@color/black"
+           android:id="@+id/leader"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/leader"
+           android:layout_marginTop="5sp"
+           android:layout_marginStart="10sp"
+           android:textColor="@color/black"
+           android:id="@+id/work_time"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="10sp"
+           android:layout_marginTop="5sp"
+           android:textColor="@color/black"
+
+           android:layout_below="@id/work_time"
+           android:id="@+id/work_complete"/>
+
+       <ImageView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginEnd="10sp"
+           android:layout_alignParentEnd="true"
+           android:layout_centerVertical="true"
+           android:id="@+id/work_status"/>
+   </RelativeLayout>
+</androidx.cardview.widget.CardView>

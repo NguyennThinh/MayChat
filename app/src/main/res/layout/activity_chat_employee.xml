@@ -143,4 +143,24 @@
             android:layout_marginEnd="5sp"
             android:src="@drawable/ic_send_message" />
     </LinearLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:background="#805A5858"
+        android:id="@+id/layout_progress"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            />
+        <TextView
+            android:id="@+id/loading_view"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/loading"/>
+    </RelativeLayout>
 </RelativeLayout>

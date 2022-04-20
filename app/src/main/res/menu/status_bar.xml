@@ -10,5 +10,18 @@
         <item android:id="@+id/create_group"
             android:title="@string/create_group"
             android:icon="@drawable/ic_create_group"
-            app:showAsAction="always" />
+        />
+
+
+        <item android:id="@+id/create_work"
+            android:title="Tạo công việc"
+            android:icon="@drawable/ic_create_group" />
+
+        <item android:id="@+id/list_work_create"
+            android:title="Công việc đã tạo"
+            android:icon="@drawable/ic_menu_work" />
+
+        <item android:id="@+id/list_my_work"
+            android:title="Công việc của bạn"
+            android:icon="@drawable/ic_menu_work" />
 </menu>

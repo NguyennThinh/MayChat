@@ -29,8 +29,14 @@ import com.example.maychatapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -51,11 +57,12 @@ public class InformationGroupActivity extends AppCompatActivity {
     private ImageView imgBack, imgEdit;
     private CircleImageView imgGroup;
     private TextView groupName, groupDescription;
-
+    private TextView listParticipant, addParticipant,deleteGroup, leaveGroup;
     private Group group;
 
     private ProgressDialog progressDialog;
 
+    private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +78,45 @@ public class InformationGroupActivity extends AppCompatActivity {
         imgEdit.setOnClickListener(view->{
             ChooseOptionEdit();
         });
+        listParticipant.setOnClickListener(view->{
+            Intent intent = new Intent(this, ListParticipantActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("groups", group);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
+        addParticipant.setOnClickListener(view->{
+            Intent intent = new Intent(this, AddParticipantActivity.class);
+
+            intent.putExtra("group_id", group.getGroupID());
+            startActivity(intent);
+        });
+        deleteGroup.setOnClickListener(view->{
+
+
+
+
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups");
+            databaseReference.child(group.getGroupID()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Group group = snapshot.getValue(Group.class);
+                    if (group.getUserCreate().equals(mUser.getUid())){
+                       deleteGroupp();
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Bạn khong có quyền xóa nhóm", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            
+        });
     }
+
 
 
     private void initUI() {
@@ -80,6 +125,10 @@ public class InformationGroupActivity extends AppCompatActivity {
         imgGroup = findViewById(R.id.img_group_avatar);
         groupName = findViewById(R.id.group_name);
         groupDescription = findViewById(R.id.group_description);
+        listParticipant = findViewById(R.id.list_participant);
+        addParticipant = findViewById(R.id.add_participant);
+        deleteGroup = findViewById(R.id.delete_group);
+        leaveGroup = findViewById(R.id.leave_group);
 
         group = (Group) getIntent().getExtras().get("my_group");
 
@@ -295,4 +344,28 @@ public class InformationGroupActivity extends AppCompatActivity {
             });
 
     }
+
+    private void deleteGroupp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Xóa nhóm");
+        builder.setMessage("Bạn muốn xóa nhóm");
+
+        builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Groups");
+                reference.child(group.getGroupID()).removeValue();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }
+        });
+        builder.setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
 }

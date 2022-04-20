@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import com.example.maychatapplication.Fragment.ListChatFragment;
 import com.example.maychatapplication.Fragment.ListGroupFragment;
 import com.example.maychatapplication.Fragment.ListUserFragment;
-import com.example.maychatapplication.Fragment.ListWorkFragment;
 
 
 public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -29,9 +28,6 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
             case 2:
                 return new ListGroupFragment();
 
-            case 3:
-                return new ListWorkFragment();
-
             default:
                 return new ListChatFragment();
         }
@@ -39,6 +35,6 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 3;
     }
 }

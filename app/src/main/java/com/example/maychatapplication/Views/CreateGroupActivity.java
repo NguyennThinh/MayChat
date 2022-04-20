@@ -173,6 +173,11 @@ public class CreateGroupActivity extends AppCompatActivity implements iAddMember
 
     }
 
+    @Override
+    public void addLeader(Users users) {
+
+    }
+
 
     private void RequestPermission() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -254,9 +259,9 @@ public class CreateGroupActivity extends AppCompatActivity implements iAddMember
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups");
                     databaseReference.child(groupID).setValue(map);
 
-                    userGroups.add(new Participant(mUser.getUid(), "admin", timeCreate));
+                    userGroups.add(new Participant(mUser.getUid(), 1, timeCreate));
                     for (Users users: arrUserSelect){
-                        userGroups.add(new Participant(users.getId(),"member", timeCreate));
+                        userGroups.add(new Participant(users.getId(),3, timeCreate));
 
                     }
                     DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("Groups")

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/admin_group"
+        android:title="Chuyển đổi trưởng nhóm"
+        android:icon="@drawable/ic_swap"
+        />
+    <item android:id="@+id/manager_group"
+        android:title="Quản lý"
+        android:icon="@drawable/ic_change_position" />
+    <item android:id="@+id/delete_position"
+        android:title="Xóa chức vụ"
+        android:icon="@drawable/ic_shut_down"/>
+    <item android:id="@+id/delete_participant"
+        android:title="Xóa thành viên"
+        android:icon="@drawable/ic_delete"/>
+</menu>

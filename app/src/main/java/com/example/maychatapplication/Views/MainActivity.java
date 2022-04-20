@@ -26,10 +26,13 @@ import com.example.maychatapplication.Utilities.PreferenceManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -78,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         Gson gson = new Gson();
         users = gson.fromJson(value, Users.class);
 
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
 
         setSupportActionBar(toolbar);
     }
@@ -105,11 +109,6 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
                         getSupportActionBar().setTitle("");
                         bottom_navigation.getMenu().findItem(R.id.Group).setChecked(true);
                         break;
-                    case 3:
-                        title.setText("Danh sách công việc");
-                        getSupportActionBar().setTitle("");
-                        bottom_navigation.getMenu().findItem(R.id.work).setChecked(true);
-                        break;
                 }
             }
 
@@ -135,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
                         viewPager.setCurrentItem(0);
                         break;
                     case R.id.employee:
-                        title.setText("Bạn bè");
+                        title.setText("Nhân viên");
                         getSupportActionBar().setTitle("");
                         viewPager.setCurrentItem(1);
                         break;
@@ -143,11 +142,6 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
                         title.setText("Nhóm");
                         getSupportActionBar().setTitle("");
                         viewPager.setCurrentItem(2);
-                        break;
-                    case R.id.work:
-                        title.setText("Thông tin cá nhân");
-                        getSupportActionBar().setTitle("");
-                        viewPager.setCurrentItem(4);
                         break;
                 }
                 return true;
@@ -181,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
             case R.id.logout:
+                preferenceManager.clearPreference();
                 FirebaseAuth mUAuth = FirebaseAuth.getInstance();
                 mUAuth.signOut();
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
@@ -192,4 +187,40 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         }
         return  true;
     }
+
+    //Check user online
+    private void CheckUserChatOnline(String status) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(mUser.getUid());
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("status", status);
+        databaseReference.updateChildren(map);
+    }
+
+    @Override
+    protected void onStart() {
+        CheckUserChatOnline("online");
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+
+        CheckUserChatOnline("online");
+
+
+    }
+
+    @Override
+    protected void onPause() {
+
+        String time = String.valueOf(System.currentTimeMillis());
+        CheckUserChatOnline(time);
+        super.onPause();
+
+    }
+
+
+
 }

@@ -19,6 +19,8 @@ import com.example.maychatapplication.Model.GroupMessage;
 import com.example.maychatapplication.Model.SingleMessage;
 import com.example.maychatapplication.Model.Users;
 import com.example.maychatapplication.R;
+import com.example.maychatapplication.Views.ChatEmployeeActivity;
+import com.example.maychatapplication.Views.ChatGroupActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -73,6 +76,7 @@ public class ListChatAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemViewType(int position) {
+
         if (arrListChat.size() !=0){
             ChatList chatList = arrListChat.get(position);
             if (chatList != null){
@@ -156,7 +160,16 @@ public class ListChatAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
                             
                             
                             arrUser.add(user);
+
+                            holder.layoutListChat.setOnClickListener(view->{
+                                Intent intent = new Intent(view.getContext(), ChatEmployeeActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("users", user);
+                                intent.putExtras(bundle);
+                                view.getContext().startActivity(intent);
+                            });
                         }
+
                       }
 
                         for (int i =0; i < arrUser.size(); i++){
@@ -196,6 +209,7 @@ public class ListChatAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                                         }
 
+                                        type = message.getType();
                                         lastMessage = message.getMessage();
                                         if (  lastMessage.equals("default") || lastMessage== null){
                                             holder.lisTChatMessage.setVisibility(View.GONE);
@@ -240,27 +254,35 @@ public class ListChatAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private void getGroupChatList(ListGroupChatViewHolder holder, ChatList list) {
         DatabaseReference  databaseReference = FirebaseDatabase.getInstance().getReference("Groups");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.child(list.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot dn : snapshot.getChildren()){
 
-                    Group group = dn.getValue(Group.class);
+
+                    Group group = snapshot.getValue(Group.class);
                     if (group != null){
-                        if (list.getId().equals(group.getGroupID())){
+
                             holder.listChatName.setText(group.getGroupName());
                             Picasso.get().load(group.getGroupImage()).into(holder.imageListChat);
                             holder.listChatStatus.setVisibility(View.GONE);
                             holder.ImageListChatStatus.setVisibility(View.GONE);
                             arrGroup.add(group);
+
+                            holder.layoutListChat.setOnClickListener(view->{
+                                Intent intent = new Intent(view.getContext(), ChatGroupActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("group", group);
+                                intent.putExtras(bundle);
+                                view.getContext().startActivity(intent);
+                            });
                         }
 
-                    }
+
                     for (int i =0; i < arrGroup.size(); i++){
                         getLastMessageGroup(arrGroup.get(i).getGroupID(), holder);
                     }
-                }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -285,20 +307,23 @@ public class ListChatAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     String name = "default";
+                                    String type = "default";
                                     String last_message = "default";
                                     for (DataSnapshot dn : snapshot.getChildren()){
                                         name = dn.child("fullName").getValue()+"";
 
                                     }
-
+                                   type = message.getType();
                                     last_message = message.getMessage();
                                     if (  last_message.equals("default") || last_message== null){
                                         holder.lisTChatMessage.setVisibility(View.GONE);
                                     }else {
                                         if (mUser.getUid().equals(message.getIdSender())){
-                                            holder.lisTChatMessage.setText("Bạn: "+last_message);
-                                        }else {
-                                            holder.lisTChatMessage.setText(name+": "+last_message);
+
+                                            setLastMessageUserGroup(holder,type,last_message,"Bạn" );
+                                         }else {
+                                            setLastMessageUserGroup(holder,type,last_message,name );
+
                                         }
                                     }
                                 }
@@ -318,5 +343,15 @@ public class ListChatAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         });
     }
-
+    private void setLastMessageUserGroup(ListGroupChatViewHolder holder, String type, String lastMessage, String sender) {
+        if (type.equals("image")){
+            holder.lisTChatMessage.setText(sender+ ": "+"Đã gửi hình ảnh");
+        }else if (type.equals("video")){
+            holder.lisTChatMessage.setText(sender+ ": "+"Đã gửi video");
+        }else if (type.equals("pdf")){
+            holder.lisTChatMessage.setText(sender+ ": "+"Đã gửi file");
+        }else {
+            holder.lisTChatMessage.setText(sender+ ": "+lastMessage);
+        }
+    }
 }

@@ -16,6 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MayChat">
         <activity
+            android:name=".Views.AddParticipantActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.ListParticipantActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.ListWorkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.LeaderWorkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.CreateWorkActivity"
+            android:exported="false" />
+        <activity
             android:name=".Views.PersonalActivity"
             android:exported="false" />
         <activity

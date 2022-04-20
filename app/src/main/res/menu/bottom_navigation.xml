@@ -14,8 +14,4 @@
 
         android:title="@string/group"/>
 
-    <item android:id="@+id/work"
-        android:icon="@drawable/ic_work"
-
-        android:title="@string/work"/>
 </menu>

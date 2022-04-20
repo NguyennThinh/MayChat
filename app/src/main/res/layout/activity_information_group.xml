@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#EDEDED"
     tools:context=".Views.InformationGroupActivity">
 
 
@@ -52,29 +53,103 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_group_avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10sp"/>
-    <TextView
-        android:id="@+id/group_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10sp"/>
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:orientation="vertical"
+       android:background="@color/white"
+       android:elevation="2dp"
+       android:layout_gravity="center_horizontal"
+       android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/group_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxWidth="300dp"
-        android:maxHeight="150dp"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10sp"/>
+       <de.hdodenhof.circleimageview.CircleImageView
+           android:id="@+id/img_group_avatar"
+           android:layout_width="150dp"
+           android:layout_height="150dp"
+           android:layout_gravity="center_horizontal"
+           android:layout_marginTop="20sp"/>
+       <TextView
+           android:id="@+id/group_name"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textSize="18sp"
+           android:textColor="@color/black"
+           android:layout_gravity="center_horizontal"
+           android:layout_marginTop="10sp"/>
+
+       <TextView
+           android:id="@+id/group_description"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:maxWidth="300dp"
+           android:maxHeight="150dp"
+           android:layout_marginBottom="10sp"
+           android:textSize="16sp"
+           android:textColor="@color/black"
+           android:layout_gravity="center_horizontal"
+           android:layout_marginTop="10sp"/>
+   </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="#E8E5E5"
+        android:layout_marginTop="10sp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/list_participant"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:background="@color/white"
+            android:paddingStart="10sp"
+            android:text="Thành viên nhóm"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:drawablePadding="10sp"
+            android:drawableStart="@drawable/ic_participant"/>
+        <TextView
+            android:id="@+id/add_participant"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:background="@color/white"
+            android:layout_marginTop="2sp"
+            android:paddingStart="10sp"
+            android:text="Thêm thành viên nhóm"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:drawablePadding="10sp"
+            android:drawableStart="@drawable/ic_add_participanr"/>
+
+        <TextView
+            android:id="@+id/delete_group"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:background="@color/white"
+            android:layout_marginTop="2sp"
+            android:paddingStart="10sp"
+            android:text="Giải tán nhóm"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:drawablePadding="10sp"
+            android:drawableStart="@drawable/ic_delete"/>
+        <TextView
+            android:id="@+id/leave_group"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:background="@color/white"
+            android:layout_marginTop="2sp"
+            android:paddingStart="10sp"
+            android:text="Rời nhóm"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:drawablePadding="10sp"
+            android:drawableStart="@drawable/ic_leave"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"/>
 </LinearLayout>

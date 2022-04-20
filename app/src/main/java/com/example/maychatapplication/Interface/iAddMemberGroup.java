@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface iAddMemberGroup {
     void addMemberGroup(List<Users> arrEmployees);
+    void addLeader(Users users);
 }

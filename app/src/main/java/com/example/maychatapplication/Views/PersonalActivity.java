@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.maychatapplication.Model.Users;
 import com.example.maychatapplication.R;
+import com.example.maychatapplication.Utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -39,6 +40,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -63,6 +65,9 @@ public class PersonalActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
+    PreferenceManager preferenceManager;
+
+    Users users;
 
     String editOption;
     @Override
@@ -92,40 +97,35 @@ public class PersonalActivity extends AppCompatActivity {
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         progressDialog = new ProgressDialog(this);
+
+        preferenceManager = new PreferenceManager(this);
+
+        Gson gson = new Gson();
+        String u = preferenceManager.getString("users");
+
+        users = gson.fromJson(u, Users.class);
     }
 
     private void loadProfile() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        databaseReference.child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Users user = snapshot.getValue(Users.class);
-                if (user !=null){
-                    if (user.getAvatar().equals("default")){
-                        imgUser.setImageResource(R.drawable.ic_launcher_background);
-
-                    }else {
-                        Picasso.get().load(user.getAvatar()).into(imgUser);
-
-                    }
-                    if (user.getBackgroundPhoto().equals("default")){
-                        imgUser.setImageResource(R.drawable.ic_launcher_background);
-                    }else {
-                        Picasso.get().load(user.getBackgroundPhoto()).into(imgBackfround);
-                    }
-                    tvName.setText(user.getFullName());
-                    tvBirthday.setText(user.getBirthday());
-                    tvPhone.setText(user.getPhone());
-                    tvEmail.setText(user.getEmail());
-                    tvGender.setText(user.getGender());
-                }
+        Toast.makeText(getApplicationContext(), users.getAvatar()+"", Toast.LENGTH_SHORT).show();
+        if (users != null){
+            if (users.getAvatar().equals("default")){
+                imgUser.setImageResource(R.drawable.ic_launcher_background);
+            }else{
+                Picasso.get().load(users.getAvatar()).into(imgUser);
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            if (users.getBackgroundPhoto().equals("default")) {
+                imgBackfround.setImageResource(R.drawable.ic_launcher_background);
+            } else {
+                Picasso.get().load(users.getBackgroundPhoto()).into(imgBackfround);
             }
-        });
+            tvName.setText(users.getFullName());
+            tvBirthday.setText(users.getBirthday());
+            tvPhone.setText(users.getPhone());
+            tvEmail.setText(users.getEmail());
+            tvGender.setText(users.getGender());
+        }
     }
     private void chooseEditProfile() {
         //Option edit
