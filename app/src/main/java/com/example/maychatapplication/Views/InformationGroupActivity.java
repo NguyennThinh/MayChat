@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.maychatapplication.Model.Group;
 import com.example.maychatapplication.Model.GroupMessage;
+import com.example.maychatapplication.Model.Participant;
 import com.example.maychatapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -353,6 +354,28 @@ public class InformationGroupActivity extends AppCompatActivity {
         builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("ChatList");
+                dbRef.child(mUser.getUid()).child(group.getGroupID()).removeValue();
+                DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Groups");
+                ref.child(group.getGroupID()).child("participant").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dn: snapshot.getChildren()){
+                            Participant participant = dn.getValue(Participant.class);
+                            if (!participant.getId().equals(mUser.getUid())){
+                                dbRef.child(participant.getId()).child(group.getGroupID()).removeValue();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Groups");
                 reference.child(group.getGroupID()).removeValue();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
